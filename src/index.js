@@ -5,7 +5,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { configureFakeBackend } from "./server/fake-backend";
 
-configureFakeBackend();
+// configureFakeBackend();
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

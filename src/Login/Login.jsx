@@ -1,22 +1,24 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 
 import { loginUser, useAuthState, useAuthDispatch } from '../Context'
+import styles from './Login.module.css'
 
 function Login(props) {
 
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
     const dispatch = useAuthDispatch()
     const { loading, errorMessage } = useAuthState()
-    console.log('lout', loading)
 
 
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+
 
     const handleLogin = async (e) => {
         e.preventDefault()
 
         try {
-            let response = await loginUser(dispatch, { username, password })
+            let response = await loginUser(dispatch, { email, password })
             if (!response) return
             props.history.push('/dashboard')
         } catch (error) {
@@ -24,23 +26,20 @@ function Login(props) {
         }
     }
 
-    console.log('lout', { loading, errorMessage })
-
-
     return (
-        <div style={{ minHeight: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <div style={{ width: 200 }}>
+        <div className={styles.container}>
+            <div className={{ width: 200 }}>
                 <h1>Login Page</h1>
                 {
-                    errorMessage ? <p style={{ fontSize: '0.8rem', color: '#bb0000' }}>{errorMessage}</p> : null
+                    errorMessage ? <p className={styles.error}>{errorMessage}</p> : null
                 }
                 <form >
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', marginBottom: 10 }}>
-                            <label htmlFor="username">Username</label>
-                            <input type="text" id='username' value={username} onChange={(e) => setUsername(e.target.value)} disabled={loading} />
+                    <div className={styles.loginForm}>
+                        <div className={styles.loginFormItem}>
+                            <label htmlFor="email">Username</label>
+                            <input type="text" id='email' value={email} onChange={(e) => setEmail(e.target.value)} disabled={loading} />
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', marginBottom: 20 }}>
+                        <div className={styles.loginFormItem}>
                             <label htmlFor="password">Password</label>
                             <input type="password" id='password' value={password} onChange={(e) => setPassword(e.target.value)} disabled={loading} />
                         </div>
